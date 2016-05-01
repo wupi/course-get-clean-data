@@ -52,3 +52,16 @@ content(req)
 json1 = content(GET("https://api.github.com/users/jtleek/repos"))
 myRepo = json1[sapply(json1, function(x) x$name == "datasharing")]
 sprintf("Repository created at %s", myRepo[[1]]$created_at)
+
+#check overlap
+library(VennDiagram)
+cardiome <- letters[1:10]
+superset <- letters[8:24]
+overlap <- calculate.overlap(
+  x = list(
+    "Cardiome" = cardiome,
+    "SuperSet" = superset,
+    "test3" = test3
+  )
+);
+sapply(overlap, length)
