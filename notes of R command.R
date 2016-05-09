@@ -53,6 +53,9 @@ json1 = content(GET("https://api.github.com/users/jtleek/repos"))
 myRepo = json1[sapply(json1, function(x) x$name == "datasharing")]
 sprintf("Repository created at %s", myRepo[[1]]$created_at)
 
+#subset and order
+q1 <- w3q1[which(w3q1$ACR == 3 & w3q1$VAL >= 2),]
+
 #check overlap
 library(VennDiagram)
 cardiome <- letters[1:10]
@@ -65,3 +68,8 @@ overlap <- calculate.overlap(
   )
 );
 sapply(overlap, length)
+
+
+#data from transformation
+#kill the separator in the string
+q31$gdp2 <- as.numeric(gsub(",", "", as.character(q31$V5)))
