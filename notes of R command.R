@@ -73,3 +73,39 @@ sapply(overlap, length)
 #data from transformation
 #kill the separator in the string
 q31$gdp2 <- as.numeric(gsub(",", "", as.character(q31$V5)))
+
+#categorize data
+df$cat <- cut(df$col, breaks = quantile(df$col))
+
+library(Hmisc)
+df$cat = cut2(df$col, g=4)
+table(df$cat)
+
+#melt data
+library(tidyr)
+library(reshape2)
+mtcars$carname <- rownames(mtcars)
+carlmelt <-  melt(mtcars, id = c('carname', 'gear', 'cyl'), measure.vars = c('mpg','hp'))
+
+
+## regular expression
+"^xox"  text starts with "xox".
+"xox$"  text ends with "xox"
+"." any single character
+".*" any character
+
+#date expression
+%d = day as a number
+%a = abb weekdays
+%A = unabb weekdays
+%m = month as number
+%b = abb month
+%B = unabb month
+%y = year
+
+format(xxx, "%a %b %d")
+
+#list to dataframe
+library(plyr)
+> ldply(test, rbind)
+
