@@ -2,6 +2,7 @@
 
 library(plyr)
 library(dplyr)
+library(reshape)
 
 #load data
 #the directory may vary on differnt machine
@@ -24,7 +25,16 @@ combined_data <- rbind(test_data, train_data)
 #get columns which include key word "mean" or "std"
 feature_index <- grep(".*mean.*|.*std.*", x = feature$V2)
 feature_need <- feature[feature_index,]
+feature_name <- gsub('[-()]', '', feature_need[,2]) #update column name format, or the name would be cracked
 
 #extract columns needed and update column names
 clean_data <- cbind(combined_data[,1:2], combined_data[,feature_index+2])
-names(clean_data) <- c() feature_need[,2]
+names(clean_data) <- c("subject", "activity", feature_name )
+
+#calculate mean for each field, aggregated by subject and activity
+clean_data_melt <- melt(clean_data, id = c("subject", "activity"))
+data_avg <- cast(clean_data_melt, subject+activity ~ variable, mean)
+
+#export result as a file
+write.table(clean_data, file = "./dataclean_w1/w4project" , row.names = F)
+write.table(data_avg, file = "./dataclean_w1/w4project_avg" , row.names = F)
