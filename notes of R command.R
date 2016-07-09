@@ -81,7 +81,7 @@ library(Hmisc)
 df$cat = cut2(df$col, g=4)
 table(df$cat)
 
-#melt data
+#melt data, aggregate multiple factors
 library(tidyr)
 library(reshape2)
 mtcars$carname <- rownames(mtcars)
@@ -109,3 +109,8 @@ format(xxx, "%a %b %d")
 library(plyr)
 > ldply(test, rbind)
 
+#check na
+mean(is.na(x))
+
+#date transform
+dates <- as.Date(as.character(dates), "%Y%m%d")
